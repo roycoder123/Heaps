@@ -24,7 +24,7 @@ public void add(int toAdd) {
 //5 points
 public void removeMax() {
     arr[0] = arr[length - 1];
-    arr[length] = 0;
+    arr[length - 1] = 0;
     length--;
     siftDown(0);
 }
@@ -34,14 +34,16 @@ public void removeMax() {
 //this should check and alter the tree after an item is inserted
 //3 points
 private void siftUp(int index) {
-    if(length > 1){
-        int current = index;
+    while(index > 0){
         int parentIndex = (index-1)/2;
-        while(arr[current] > arr[parentIndex]){
+        if(arr[index] > arr[parentIndex]){
             int temp = arr[parentIndex];
-            arr[parentIndex] = arr[current];
-            arr[current] = temp;
-            index = (index-1)/2;
+            arr[parentIndex] = arr[index];
+            arr[index] = temp;
+            index = parentIndex;
+        }
+        else{
+            break;
         }
     }
 }
@@ -49,23 +51,23 @@ private void siftUp(int index) {
 //this should check and alter the tree after an item is deleted.
 //3 points
 private void siftDown(int index) {
-    int current = index;
     int leftChildIndex = 2*index+1;
     int rightChildIndex = 2*index+2;
-    while(arr[current] < arr[leftChildIndex] || arr[current] < arr[rightChildIndex]){
-        //if left child is bigger
-        if(arr[leftChildIndex] > arr[rightChildIndex]){
-            int temp = arr[current];
-            arr[current] = arr[leftChildIndex];
-            arr[leftChildIndex] = temp;
+    int replace = index;
+    while(true){
+        if(leftChildIndex < length && arr[leftChildIndex] > arr[replace]){
+            replace = leftChildIndex;
         }
-        //if right child is bigger
-        if(arr[leftChildIndex] < arr[rightChildIndex]){
-            int temp = 0;
-            arr[current] = temp;
-            arr[current] = arr[rightChildIndex];
-            arr[rightChildIndex] = temp;
+        if(rightChildIndex < length && arr[rightChildIndex] > arr[replace]){
+            replace = rightChildIndex;
         }
+        if(index == replace){
+            break;
+        }
+        int temp = arr[index];
+        arr[index] = arr[replace];
+        arr[replace] = temp;
+        index = replace;
     }
 }
 
