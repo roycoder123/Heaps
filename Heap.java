@@ -51,10 +51,11 @@ private void siftUp(int index) {
 //this should check and alter the tree after an item is deleted.
 //3 points
 private void siftDown(int index) {
-    int leftChildIndex = 2*index+1;
-    int rightChildIndex = 2*index+2;
-    int replace = index;
     while(true){
+        int leftChildIndex = 2*index+1;
+        int rightChildIndex = 2*index+2;
+        int replace = index;
+
         if(leftChildIndex < length && arr[leftChildIndex] > arr[replace]){
             replace = leftChildIndex;
         }
@@ -67,6 +68,7 @@ private void siftDown(int index) {
         int temp = arr[index];
         arr[index] = arr[replace];
         arr[replace] = temp;
+        
         index = replace;
     }
 }
